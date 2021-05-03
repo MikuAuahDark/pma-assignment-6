@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuItem"
+        android:icon="@drawable/ic_baseline_star_border_24"
+        android:title="Idols" />
+    <item
+        android:id="@+id/menuItem2"
+        android:icon="@drawable/ic_baseline_card_membership_24"
+        android:title="UR Cards" />
+    <item
+        android:id="@+id/menuItem3"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="About" />
+</menu>
