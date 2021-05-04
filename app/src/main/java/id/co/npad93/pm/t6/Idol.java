@@ -1,8 +1,11 @@
 package id.co.npad93.pm.t6;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Idol {
+public class Idol implements Parcelable {
     public String getName() {
         return name;
     }
@@ -63,6 +66,38 @@ public class Idol {
     public String getCharacterSmallImageURL() {
         return "https://i.schoolido.lu/chibi/small_" + getCharacterImageFile();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(japaneseName);
+        dest.writeInt(age);
+        dest.writeString(group);
+        dest.writeString(summary);
+    }
+
+    public static final Parcelable.Creator<Idol> CREATOR = new Parcelable.Creator<Idol>() {
+        @Override
+        public Idol createFromParcel(Parcel source) {
+            Idol i = new Idol();
+            i.name = source.readString();
+            i.japaneseName = source.readString();
+            i.age = source.readInt();
+            i.group = source.readString();
+            i.summary = source.readString();
+            return i;
+        }
+
+        @Override
+        public Idol[] newArray(int size) {
+            return new Idol[size];
+        }
+    };
 
     private String name;
     @SerializedName("japanese_name")

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class IdolAdapter extends RecyclerView.Adapter<IdolAdapter.ViewHolder> {
     public IdolAdapter(@NonNull List<Idol> idols, OnItemClick clickCallback) {
+        super();
         this.idols = idols;
         this.clickCallback = clickCallback;
     }
@@ -34,7 +35,7 @@ public class IdolAdapter extends RecyclerView.Adapter<IdolAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Idol idol = idols.get(position);
 
-        Glide.with(holder.context).load(idol.getCharacterSmallImageURL()).into(holder.smallImage);
+        ApiHelper.loadImageAsync(holder.context, idol.getCharacterSmallImageURL(), holder.smallImage);
         holder.name.setText(idol.getNameLLMFSOrder());
         holder.jpnName.setText(idol.getJapaneseName());
         holder.group.setText(idol.getGroup());

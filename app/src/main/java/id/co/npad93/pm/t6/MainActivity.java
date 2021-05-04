@@ -9,12 +9,15 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fragments = new HashMap<Integer, Fragment>();
 
         BottomNavigationView navigationView = findViewById(R.id.bottomNavigationView);
         navigationView.setOnNavigationItemSelectedListener(this);
@@ -27,12 +30,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Fragment f = null;
 
         if (id == R.id.menuItem) {
-            f = new IdolFragment();
+            f = getFragment(R.id.menuItem, IdolFragment.class);
         } else if (id == R.id.menuItem2) {
-            // TODO
-            return false;
+            f = getFragment(R.id.menuItem2, CardFragment.class);
         } else if (id == R.id.menuItem3) {
-            f = new AboutFragment();
+            f = getFragment(R.id.menuItem3, AboutFragment.class);
         }
 
         if (f != null) {
@@ -41,4 +43,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         return f != null;
     }
+
+    private <T extends Fragment> T getFragment(int index, Class<T> cls) {
+        T f = (T) fragments.get(index);
+
+        if (f == null) {
+            try {
+                fragments.put(index, f = cls.newInstance());
+            } catch (InstantiationException | IllegalAccessException e) {
+                return null;
+            }
+        }
+
+        return f;
+    }
+
+    private HashMap<Integer, Fragment> fragments;
 }

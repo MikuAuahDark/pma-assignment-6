@@ -1,6 +1,5 @@
 package id.co.npad93.pm.t6;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,45 +12,48 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class IdolFragment extends Fragment implements IdolAdapter.OnItemClick {
-    public IdolFragment() {
+public class CardFragment extends Fragment implements IdolAdapter.OnItemClick {
+    public CardFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_idol, container, false);
+        View view = inflater.inflate(R.layout.fragment_card, container, false);
 
         // Init recycler view
-        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = view.findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Load data
-        if (idols == null) {
+        if (cards == null) {
             SchoolIdolApi schoolIdolApi = ApiHelper.getRetrofitInstance().create(SchoolIdolApi.class);
-            Call<IdolResponse> idolResponseCall = schoolIdolApi.getIdols(20, 1);
-            idolResponseCall.enqueue(new Callback<IdolResponse>() {
+            Call<CardResponse> cardResponseCall = schoolIdolApi.getCards(25, 1, "UR");
+            cardResponseCall.enqueue(new Callback<CardResponse>() {
                 @Override
-                public void onResponse(Call<IdolResponse> call, Response<IdolResponse> response) {
+                public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                     if (response.isSuccessful()) {
-                        IdolResponse idolResponse = response.body();
+                        CardResponse cardResponse = response.body();
 
-                        if (idolResponse != null) {
-                            IdolFragment.this.idols = idolResponse.getResults();
+                        if (cardResponse != null) {
+                            CardFragment.this.cards = cardResponse;
                             updateAdapter(recyclerView);
                         }
                     }
                 }
 
                 @Override
-                public void onFailure(Call<IdolResponse> call, Throwable t) {
+                public void onFailure(Call<CardResponse> call, Throwable t) {
                     Log.d("npad93.pm.t6", "onFailure", t);
                     Toast.makeText(getActivity(), "Failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
                 }
@@ -65,13 +67,12 @@ public class IdolFragment extends Fragment implements IdolAdapter.OnItemClick {
 
     @Override
     public void onClick(int i) {
-        Intent intent = new Intent(getContext(), IdolActivity.class);
-        intent.putExtra("idol", idols.get(i));
+        // TODO intent
     }
 
     private void updateAdapter(RecyclerView recyclerView) {
-        recyclerView.setAdapter(new IdolAdapter(idols, this));
+        recyclerView.setAdapter(new CardAdapter(cards.getResults(), this));
     }
 
-    private List<Idol> idols;
+    private CardResponse cards;
 }

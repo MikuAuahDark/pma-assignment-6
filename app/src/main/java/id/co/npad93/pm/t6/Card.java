@@ -73,7 +73,7 @@ public class Card {
     }
 
     public String getTranslatedSkillName() {
-        return translatedSkillName;
+        return translatedSkillName.isEmpty() ? null : translatedSkillName;
     }
 
     public String getSkillDetails() {
@@ -88,15 +88,15 @@ public class Card {
         return centerSkillDetails;
     }
 
-    public String getCardImage() {
+    public String getCardImageURL() {
         return "https:" + cardImage;
     }
 
-    public String getIdolizedCardImage() {
+    public String getIdolizedCardImageURL() {
         return "https:" + idolizedCardImage;
     }
 
-    public String getRoundedCardImage() {
+    public String getRoundedCardImageURL() {
         return "https:" + roundedCardImage;
     }
 
