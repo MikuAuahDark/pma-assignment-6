@@ -28,8 +28,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         if (id == R.id.menuItem) {
             f = new IdolFragment();
+        } else if (id == R.id.menuItem2) {
+            // TODO
+            return false;
+        } else if (id == R.id.menuItem3) {
+            f = new AboutFragment();
         }
-        // TODO other
 
         if (f != null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, f).commit();

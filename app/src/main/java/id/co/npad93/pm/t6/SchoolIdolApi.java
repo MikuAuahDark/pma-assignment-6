@@ -10,4 +10,11 @@ public interface SchoolIdolApi {
         @Query("page_size") int itemsPerRequest,
         @Query("page") int page
     );
+
+    @GET("cards/?ordering=-game_id&is_special=False&is_promo=False&is_event=False")
+    Call<CardResponse> getCards(
+        @Query("page_size") int itemsPerRequest,
+        @Query("page") int page,
+        @Query("rarity") String rarity
+    );
 }
