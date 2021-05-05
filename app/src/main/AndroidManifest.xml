@@ -12,6 +12,7 @@
         android:theme="@style/Theme.RecviewWithAPI">
         <activity
             android:name=".IdolActivity"
+            android:parentActivityName=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

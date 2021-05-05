@@ -23,40 +23,28 @@ public class Idol implements Parcelable {
         }
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getJapaneseName() {
         return japaneseName;
     }
 
-    public void setJapaneseName(String japaneseName) {
-        this.japaneseName = japaneseName;
+    public String getVAName() {
+        return cv.name;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getGroup() {
         return group;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public String getSubGroup() {
+        return subGroup;
     }
 
     public String getSummary() {
         return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public String getCharacterImageURL() {
@@ -78,7 +66,9 @@ public class Idol implements Parcelable {
         dest.writeString(japaneseName);
         dest.writeInt(age);
         dest.writeString(group);
+        dest.writeString(subGroup);
         dest.writeString(summary);
+        dest.writeString(cv.name);
     }
 
     public static final Parcelable.Creator<Idol> CREATOR = new Parcelable.Creator<Idol>() {
@@ -89,7 +79,10 @@ public class Idol implements Parcelable {
             i.japaneseName = source.readString();
             i.age = source.readInt();
             i.group = source.readString();
+            i.subGroup = source.readString();
             i.summary = source.readString();
+            i.cv = new CV();
+            i.cv.name = source.readString();
             return i;
         }
 
@@ -99,13 +92,20 @@ public class Idol implements Parcelable {
         }
     };
 
+    public static class CV {
+        private String name;
+    }
+
     private String name;
     @SerializedName("japanese_name")
     private String japaneseName;
     private int age;
     @SerializedName("main_unit")
     private String group;
+    @SerializedName("sub_unit")
+    private String subGroup;
     private String summary;
+    private CV cv;
 
     private String getCharacterImageFile() {
         return name.replace(' ', '_') + ".png";

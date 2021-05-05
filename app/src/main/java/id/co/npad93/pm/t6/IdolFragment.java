@@ -67,6 +67,7 @@ public class IdolFragment extends Fragment implements IdolAdapter.OnItemClick {
     public void onClick(int i) {
         Intent intent = new Intent(getContext(), IdolActivity.class);
         intent.putExtra("idol", idols.get(i));
+        startActivity(intent);
     }
 
     private void updateAdapter(RecyclerView recyclerView) {
